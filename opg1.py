@@ -1,34 +1,29 @@
 # O P P G A V E  1
 
-# tall = int(input('Tall: \n'))
-
-
 def primtallsum(sum):
     primliste = [2]
     x = 2
     primsum = 2
     while primsum < sum:
+        # Kjører loopen så lenge summen av alle primtallene den finner
+        # er mindre enn argumentet 'sum'
         for i in range(2, x):
             if x % i == 0:
+                # Sjekker om x er delelig paa i
                 break
-            elif x == i+1 or x == 2:
+            elif x == i+1:
+                # om x ikke er delelig med i noen gang
                 primliste.append(x)
                 primsum = primsum + x
 
         x += 1
 
-    # E N U M E R A T E
+    # Printer ut primtallene i listen dersom de har index som primtall
     for i, j in enumerate(primliste):
         if i in primliste:
             print(j)
-            pass
 
-    # listelengde = len(primliste)
-    # return listelengde
-    return primliste
-
-
-# print(primtallsum(10000))
+    return len(primliste)
 
 
 # O P P G A V E  2
@@ -42,7 +37,7 @@ tippelagliste = ["Bodø/glimt", "Molde", "Odd", "Rosenberg",
 
 
 def listehandtering(lag, tippelaglisteliste):
-    # Splitter opp lagene etter mellomrom
+    # Splitter opp lagene ved mellomrom
     lag = lag.split(" ")
 
     for i in tippelagliste:
@@ -66,10 +61,6 @@ def opprykk(tippelag, oboslag):
     return tippelagliste
 
 
-# listehandtering(lag, tippelagliste)
-# print(opprykk("Stabæk", "Ranheim"))
-
-
 # O P P G A V E  3
 
 valorer = {"kronestykke": 1, "femkrone": 5, "tikrone": 10, "tjuekrone": 20,
@@ -87,48 +78,75 @@ def vekslepenger(betalt, pris):
     if veksel < 0:
         print('Kunden betalte for lite')
     elif not veksel:
+        # Dersom veksel er 0
         print('Kunden har betalt akkurat nok')
     else:
-        for navn, verdi in reversed(valorer.items()):
+        for valor, verdi in reversed(valorer.items()):
+            # Går gjennom dictionaryen baklengs, og lagrer nøkler og verdier
+            # i variablene valor og verdi.
+
+            # Finner ut hvor mye som trengs av valoren ved å heltallsdividere
+            # trekker fra den samlede summen fra veksel
             antall = veksel // verdi
             veksel -= verdi * antall
+
+            # Printer antall og valor dersom antall ikke er null
             if antall:
-                print(antall, navn)
+                print(antall, valor)
 
 
 def innskudd():
     # Tar inn input med f.eks '2 hundrelapp'
     verdi = input('Skriv hva du vil sette inn i banken: \n')
 
+    # Deler opp inputen i to deler, antall og valor
     antall = int(verdi.split(' ')[0])
-    navn = verdi.split(' ')[1]
+    valor = verdi.split(' ')[1]
 
-    kassabeholdning[navn] += antall
+    # Legger til antall av valor i kassabeholdingen og returnerer den
+    kassabeholdning[valor] += antall
     return kassabeholdning
 
 
-def ernok(navn):
-    if kassabeholdning[navn] > 0:
+def ernok(valor):
+    # Returnerer True dersom det er igjen noe av valoren i kassabeholdningen
+    if kassabeholdning[valor] > 0:
         return True
 
 
 def uttak(belop):
     if belop < 0:
+        # Returnerer False siden man ikke kan ta ut negative penger
         return False
     else:
-        for navn in reversed(valorer):
-            while ernok(navn) and belop >= valorer[navn]:
-                kassabeholdning[navn] -= 1
-                belop -= valorer[navn]
+        for valor in reversed(valorer):
+            # Går gjennom listen valorer baklengs, slik at de største
+            # verdiene kommer først
+            while ernok(valor) and belop >= valorer[valor]:
+                # Trekker fra 1 av valoren i kassabeholdningen dersom det
+                # det er nok igjen i beholdningen og beløpet som skal tas ut
+                # er større en valoren.
+                kassabeholdning[valor] -= 1
+
+                # Trekker fra en sum med samme verdi som valoren fra belop
+                belop -= valorer[valor]
 
     return kassabeholdning
 
 
 def pengebehandling(metode):
-    metode()
+    # Tar inn argumentet metode, som skal være et navn på en funksjon
+    if metode == uttak:
+        # Tar inn input om funksjonen er 'uttak' siden den krever argument
+        verdi = int(input('Hvor mye vil du ta ut av banken? \n'))
+        metode(verdi)
+    else:
+        metode()
 
+
+# Eksempler av hvordan man kan kalle paa funksjonene
 
 # vekslepenger(108, 80)
-# print(innskudd())
-# print(uttak(100))
-pengebehandling(innskudd)
+# innskudd()
+# uttak(100)
+# pengebehandling(innskudd)

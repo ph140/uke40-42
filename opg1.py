@@ -30,7 +30,7 @@ def primtallsum(sum):
 
 lag = "Molde Brann Vålerenga Haugesund Mjøndalen"
 
-tippelagliste = ["Bodø/glimt", "Molde", "Odd", "Rosenberg",
+tippelagliste = ["Bodø/glimt", "Molde", "Odd", "Rosenborg",
                  "Kristiansund", "Vålerenga", "Brann", "Haugesund",
                  "Stabæk", "Viking", "Strømsgodset", "Sarpsborg 08",
                  "Sandefjord", "Start", "Mjøndalen", "Aalesund"]
@@ -47,8 +47,7 @@ def listehandtering(lag, tippelaglisteliste):
             lag.append(i)
 
     # Reverserer og returnerer den oppdaterte listen.
-    lag.sort(reverse=True)
-    return lag
+    return sorted(lag, reverse=True)
 
 
 def opprykk(tippelag, oboslag):
@@ -57,9 +56,10 @@ def opprykk(tippelag, oboslag):
     tippelagliste.append(oboslag)
 
     # Reverserer og returnerer tippeligalisten
-    tippelagliste.sort(reverse=True)
-    return tippelagliste
+    return sorted(tippelagliste, reverse=True)
 
+
+print(listehandtering(lag, tippelagliste))
 
 # O P P G A V E  3
 

@@ -59,8 +59,6 @@ def opprykk(tippelag, oboslag):
     return sorted(tippelagliste, reverse=True)
 
 
-print(listehandtering(lag, tippelagliste))
-
 # O P P G A V E  3
 
 valorer = {"kronestykke": 1, "femkrone": 5, "tikrone": 10, "tjuekrone": 20,
@@ -108,12 +106,6 @@ def innskudd():
     return kassabeholdning
 
 
-def ernok(valor):
-    # Returnerer True dersom det er igjen noe av valoren i kassabeholdningen
-    if kassabeholdning[valor] > 0:
-        return True
-
-
 def uttak(belop):
     if belop < 0:
         # Returnerer False siden man ikke kan ta ut negative penger
@@ -122,7 +114,7 @@ def uttak(belop):
         for valor in reversed(valorer):
             # Går gjennom listen valorer baklengs, slik at de største
             # verdiene kommer først
-            while ernok(valor) and belop >= valorer[valor]:
+            while kassabeholdning[valor] > 0 and belop >= valorer[valor]:
                 # Trekker fra 1 av valoren i kassabeholdningen dersom det
                 # det er nok igjen i beholdningen og beløpet som skal tas ut
                 # er større en valoren.
@@ -148,5 +140,5 @@ def pengebehandling(metode):
 
 # vekslepenger(108, 80)
 # innskudd()
-# uttak(100)
+# print(uttak(6000))
 # pengebehandling(innskudd)
